@@ -1,6 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
   const video = document.getElementById('video');
-
+  console.log(ZXing, 123);
+  const { BrowserMultiFormatReader, DecodeHintType, BarcodeFormat } = ZXing;
+  console.log(DecodeHintType, BarcodeFormat);
+  const hints = new Map();
+  hints.set(DecodeHintType.POSSIBLE_FORMATS, [
+    BarcodeFormat.UPC_A,
+    BarcodeFormat.UPC_E,
+  ]);
+  hints.set(DecodeHintType.TRY_HARDER, true);
+  hints.set(DecodeHintType.PURE_BARCODE, true);
+  hints.set(DecodeHintType.CHARACTER_SET, 'UTF-8');
+  hints.set(DecodeHintType.ALLOWED_LENGTHS, [12, 13]);
+  hints.set(DecodeHintType.ASSUME_GS1, true);
   // Function to start the video stream
   function startVideoStream() {
     navigator.mediaDevices
@@ -18,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to scan the code
   function scanCode() {
-    const codeReader = new ZXing.BrowserMultiFormatReader();
+    const codeReader = new ZXing.BrowserMultiFormatReader(hints);
 
     codeReader
       .decodeFromVideoDevice(null, 'video', (result, err) => {
@@ -42,3 +54,5 @@ document.addEventListener('DOMContentLoaded', function () {
   // Start the video stream when the page loads
   startVideoStream();
 });
+
+console.log(321);
