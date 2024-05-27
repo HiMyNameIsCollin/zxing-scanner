@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empty Body Template</title>
+    <title>ZXing Example</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Body is intentionally left empty -->
+    <!-- Element to hold the video stream -->
+    <div id="video-container">
+        <video id="video" width="600" height="400" style="border: 1px solid gray"></video>
+    </div>
+    <!-- Include ZXing library -->
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.18.6/umd/index.min.js"></script>
     <script src="index.js" defer></script>
 </body>
 </html>
