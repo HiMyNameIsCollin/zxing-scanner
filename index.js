@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   const codeReader = new ZXing.BrowserBarcodeReader();
-
+  console.log('Init success');
   codeReader
     .getVideoInputDevices()
     .then((videoInputDevices) => {
       const firstDeviceId = videoInputDevices[0]?.deviceId;
+      console.log(firstDeviceId);
       if (!firstDeviceId) return;
       codeReader.decodeFromVideoDevice(
         firstDeviceId,
