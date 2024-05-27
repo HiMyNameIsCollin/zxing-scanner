@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         'video',
         (result, err) => {
           if (result) {
+            console.log(result);
             console.log(result.text);
             alert('Barcode detected: ' + result.text);
             // Optionally stop the scanning after a successful scan
