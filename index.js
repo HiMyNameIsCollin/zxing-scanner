@@ -31,22 +31,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to scan the code
   function scanCode() {
-    const codeReader = new BrowserMultiFormatReader(hints);
+    const codeReader = new BrowserMultiFormatReader();
     codeReader
-      .decodeFromVideoDevice(null, 'video', (result, err) => {
-        if (result) {
-          console.log(result);
-          window.alert(result.text);
-          // // Stop the video stream after successful scan
-          // const stream = video.srcObject;
-          // const tracks = stream.getTracks();
-          // tracks.forEach((track) => track.stop());
-          // video.srcObject = null;
-        }
-        if (err && !(err instanceof ZXing.NotFoundException)) {
-          console.error(err);
-        }
-      })
+      .decodeFromVideoDevice(
+        null,
+        'video',
+        (result, err) => {
+          if (result) {
+            console.log(result);
+            window.alert(result.text);
+            // // Stop the video stream after successful scan
+            // const stream = video.srcObject;
+            // const tracks = stream.getTracks();
+            // tracks.forEach((track) => track.stop());
+            // video.srcObject = null;
+          }
+          if (err && !(err instanceof ZXing.NotFoundException)) {
+            console.error(err);
+          }
+        },
+        hints,
+      )
       .catch((err) => {
         console.error(err);
       });
