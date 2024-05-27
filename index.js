@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     codeReader
       .decodeFromVideoDevice(null, 'video', (result, err) => {
         if (result) {
-          console.log(result);
+          window.alert(result.text);
           resultElement.textContent = result.text;
           // Stop the video stream after successful scan
           const stream = video.srcObject;
