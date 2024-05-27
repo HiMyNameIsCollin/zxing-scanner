@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-  const codeReader = new ZXing.BrowserBarcodeReader();
+  const codeReader = new ZXing.BrowserMultiFormatReader();
   console.log('Init success');
   codeReader
     .getVideoInputDevices()
@@ -7,16 +7,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
       const firstDeviceId = videoInputDevices[0]?.deviceId;
       console.log(firstDeviceId);
       if (!firstDeviceId) return;
+      const previewElem = document.querySelector('#video');
       codeReader.decodeFromVideoDevice(
         firstDeviceId,
-        'video',
+        previewElem,
         (result, err) => {
           if (result) {
             console.log(result);
             console.log(result.text);
             alert('Barcode detected: ' + result.text);
-            // Optionally stop the scanning after a successful scan
-            codeReader.reset();
           }
           if (err && !(err instanceof ZXing.NotFoundException)) {
             console.error(err);
