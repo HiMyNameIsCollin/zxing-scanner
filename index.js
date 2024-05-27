@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
   const video = document.getElementById('video');
-  const resultElement = document.getElementById('result');
 
   // Function to start the video stream
   function startVideoStream() {
@@ -25,12 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
       .decodeFromVideoDevice(null, 'video', (result, err) => {
         if (result) {
           window.alert(result.text);
-          resultElement.textContent = result.text;
-          // Stop the video stream after successful scan
-          const stream = video.srcObject;
-          const tracks = stream.getTracks();
-          tracks.forEach((track) => track.stop());
-          video.srcObject = null;
+          // // Stop the video stream after successful scan
+          // const stream = video.srcObject;
+          // const tracks = stream.getTracks();
+          // tracks.forEach((track) => track.stop());
+          // video.srcObject = null;
         }
         if (err && !(err instanceof ZXing.NotFoundException)) {
           console.error(err);
