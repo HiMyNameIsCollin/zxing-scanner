@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   const video = document.getElementById('video');
   const { BrowserMultiFormatReader, DecodeHintType, BarcodeFormat } = ZXing;
-  console.log(BarcodeFormat);
+  console.log(ZXing);
   const hints = new Map();
   hints.set(DecodeHintType.POSSIBLE_FORMATS, [
     BarcodeFormat.UPC_A,
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to scan the code
   function scanCode() {
-    const codeReader = new BrowserMultiFormatReader(hints);
+    const codeReader = new BrowserMultiFormatReader();
     codeReader
       .decodeFromVideoDevice(null, 'video', (result, err) => {
         if (result) {
