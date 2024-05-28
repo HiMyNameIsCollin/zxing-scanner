@@ -25,38 +25,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     navigator.mediaDevices
       .getUserMedia({
-        video: { facingMode: 'environment', torch: true },
+        video: { facingMode: 'environment' },
       })
       .then((stream) => {
         video.srcObject = stream;
         const videoTrack = stream.getVideoTracks()[0];
-        console.log(videoTrack.getConstraints());
-        if (
-          !videoTrack?.getCapabilities ||
-          !videoTrack.getCapabilities()?.torch
-        ) {
-          window.alert(`${videoTrack?.label} cannot access the flashlight`);
-        }
-        document
-          .getElementById('turnOnFlashlight')
-          .addEventListener('click', () => {
-            videoTrack
-              .applyConstraints({ advanced: [{ torch: true }] })
-              .catch((error) =>
-                console.error('Error turning on flashlight:', error),
-              );
-            console.log(videoTrack.getConstraints());
-          });
+        // if (
+        //   !videoTrack?.getCapabilities ||
+        //   !videoTrack.getCapabilities()?.torch
+        // ) {
+        //   window.alert(`${videoTrack?.label} cannot access the flashlight`);
+        // }
 
-        document
-          .getElementById('turnOffFlashlight')
-          .addEventListener('click', () => {
-            videoTrack
-              .applyConstraints({ advanced: [{ torch: false }] })
-              .catch((error) =>
-                console.error('Error turning off flashlight:', error),
-              );
-          });
         video.setAttribute('playsinline', true); // required to tell iOS safari we don't want fullscreen
         // video.play();
         scanCode(codeReader, selectedDeviceId);
@@ -69,27 +49,21 @@ document.addEventListener('DOMContentLoaded', function () {
   // Function to scan the code
   function scanCode(codeReader, selectedDeviceId) {
     codeReader
-      .decodeFromVideoDevice(
-        selectedDeviceId,
-        'video',
-        (result, err) => {
-          if (result) {
-            console.log(result);
-            window.alert(
-              `Type: ${BarcodeFormat?.[result.format]}, Code: ${result.text}`,
-            );
-            // // Stop the video stream after successful scan
-            // const stream = video.srcObject;
-            // const tracks = stream.getTracks();
-            // tracks.forEach((track) => track.stop());
-            // video.srcObject = null;
-          }
-          if (err && !(err instanceof ZXing.NotFoundException)) {
-            console.error(err);
-          }
-        },
-        hints,
-      )
+      .decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+        if (result) {
+          window.alert(
+            `Type: ${BarcodeFormat?.[result.format]}, Code: ${result.text}`,
+          );
+          // // Stop the video stream after successful scan
+          // const stream = video.srcObject;
+          // const tracks = stream.getTracks();
+          // tracks.forEach((track) => track.stop());
+          // video.srcObject = null;
+        }
+        if (err && !(err instanceof ZXing.NotFoundException)) {
+          console.error(err);
+        }
+      })
       .catch((err) => {
         console.error(err);
       });
