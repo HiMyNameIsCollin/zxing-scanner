@@ -1,5 +1,6 @@
+const video = document.getElementById('video');
+
 document.addEventListener('DOMContentLoaded', function () {
-  const video = document.getElementById('video');
   const { BrowserMultiFormatReader, DecodeHintType, BarcodeFormat } = ZXing;
   const hints = new Map();
   hints.set(DecodeHintType.POSSIBLE_FORMATS, [
@@ -56,3 +57,31 @@ document.addEventListener('DOMContentLoaded', function () {
   // Start the video stream when the page loads
   startVideoStream();
 });
+video.onloadedmetadata = () => {
+  console.log(123);
+  stream = video.srcObject;
+  track = stream.getVideoTracks()[0];
+  console.log(track.getCapabilities());
+  track
+    .applyConstraints({
+      torch: true,
+    })
+    .catch((err) => {
+      console.error('Error applying constraints:', err);
+    });
+};
+
+// Function to toggle the flashlight on/off
+function toggleFlashlight() {
+  if (track) {
+    let constraints = track.getConstraints();
+    let torchState = constraints?.torch;
+    track
+      .applyConstraints({
+        advanced: [{ torch: !torchState }],
+      })
+      .catch((err) => {
+        console.error('Error toggling torch:', err);
+      });
+  }
+}
