@@ -23,9 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
       .then((stream) => {
         video.srcObject = stream;
         const videoTrack = stream.getVideoTracks()[0];
-        console.log(videoTrack.getCapabilities());
         if (!videoTrack.getCapabilities()?.torch) {
-          window.alert('No flashlight available');
+          window.alert(`${videoTrack?.label} cannot access the flashlight`);
         }
         document
           .getElementById('turnOnFlashlight')
