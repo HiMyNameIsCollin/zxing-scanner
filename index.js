@@ -2,17 +2,17 @@ document.addEventListener('DOMContentLoaded', function () {
   const video = document.getElementById('video');
   const { BrowserMultiFormatReader, DecodeHintType, BarcodeFormat } = ZXing;
   const hints = new Map();
-  hints.set(DecodeHintType.POSSIBLE_FORMATS, [
-    BarcodeFormat.UPC_A,
-    BarcodeFormat.UPC_E,
-    BarcodeFormat.QR_CODE,
-    BarcodeFormat.EAN_8,
-    BarcodeFormat.EAN_13,
-    BarcodeFormat.UPC_EAN_EXTENSION,
-    BarcodeFormat.CODE_39,
-    BarcodeFormat.CODE_93,
-    BarcodeFormat.CODE_128,
-  ]);
+  // hints.set(DecodeHintType.POSSIBLE_FORMATS, [
+  //   BarcodeFormat.UPC_A,
+  //   BarcodeFormat.UPC_E,
+  //   BarcodeFormat.QR_CODE,
+  //   BarcodeFormat.EAN_8,
+  //   BarcodeFormat.EAN_13,
+  //   BarcodeFormat.UPC_EAN_EXTENSION,
+  //   BarcodeFormat.CODE_39,
+  //   BarcodeFormat.CODE_93,
+  //   BarcodeFormat.CODE_128,
+  // ]);
   // hints.set(DecodeHintType.TRY_HARDER, true); // Fucks up QR
   // Function to start the video stream
   function startVideoStream() {
