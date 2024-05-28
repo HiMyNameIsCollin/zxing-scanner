@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     BarcodeFormat.CODE_93,
     BarcodeFormat.CODE_128,
   ]);
-  hints.set(DecodeHintType.TRY_HARDER, true);
+  // hints.set(DecodeHintType.TRY_HARDER, true); // Fucks up QR
   // Function to start the video stream
   function startVideoStream() {
     navigator.mediaDevices
