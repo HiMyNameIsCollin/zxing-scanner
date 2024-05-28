@@ -1,5 +1,6 @@
 const video = document.getElementById('video');
-
+const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+console.log(supportedConstraints);
 document.addEventListener('DOMContentLoaded', function () {
   const { BrowserMultiFormatReader, DecodeHintType, BarcodeFormat } = ZXing;
   const hints = new Map();
@@ -57,17 +58,40 @@ document.addEventListener('DOMContentLoaded', function () {
   // Start the video stream when the page loads
   startVideoStream();
 });
-video.onloadedmetadata = () => {
-  console.log(123);
+video.onloadedmetadata = async () => {
   stream = video.srcObject;
   track = stream.getVideoTracks()[0];
-  console.log(track.getCapabilities());
-  track
-    .applyConstraints({
-      torch: true,
-    })
-    .catch((err) => {
-      console.error('Error applying constraints:', err);
+  console.log(track);
+  try {
+    await track.applyConstraints({
+      focusMode: 'continuous',
+    });
+  } catch (err) {
+    console.error('Error applying constraints:', err);
+  }
+  document
+    .getElementById('turnOnFlashlight')
+    .addEventListener('click', async () => {
+      try {
+        await track.applyConstraints({
+          torch: true,
+        });
+        console.log(track.getConstraints());
+      } catch (err) {
+        console.error('Error applying constraints:', err);
+      }
+    });
+  document
+    .getElementById('turnOffFlashlight')
+    .addEventListener('click', async () => {
+      try {
+        await track.applyConstraints({
+          torch: false,
+        });
+        console.log(track.getConstraints());
+      } catch (err) {
+        console.error('Error applying constraints:', err);
+      }
     });
 };
 
