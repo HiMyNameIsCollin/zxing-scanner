@@ -23,27 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const vidDevices = await codeReader.listVideoInputDevices();
     selectedDeviceId = vidDevices[0].deviceId;
 
-    navigator.mediaDevices
-      .getUserMedia({
-        video: { facingMode: 'environment' },
-      })
-      .then((stream) => {
-        video.srcObject = stream;
-        const videoTrack = stream.getVideoTracks()[0];
-        // if (
-        //   !videoTrack?.getCapabilities ||
-        //   !videoTrack.getCapabilities()?.torch
-        // ) {
-        //   window.alert(`${videoTrack?.label} cannot access the flashlight`);
-        // }
-
-        video.setAttribute('playsinline', true); // required to tell iOS safari we don't want fullscreen
-        // video.play();
-        scanCode(codeReader, selectedDeviceId);
-      })
-      .catch((err) => {
-        console.error('Error accessing the camera: ', err);
-      });
+    scanCode(codeReader, selectedDeviceId);
   }
 
   // Function to scan the code
