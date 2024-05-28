@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const vidDevices = await codeReader.listVideoInputDevices();
     selectedDeviceId = vidDevices[0].deviceId;
-
+    window.alert(`${vidDevices?.length} devices`);
     scanCode(codeReader, selectedDeviceId);
   }
 
