@@ -17,9 +17,31 @@ document.addEventListener('DOMContentLoaded', function () {
   // Function to start the video stream
   function startVideoStream() {
     navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: 'environment' } })
+      .getUserMedia({
+        video: { facingMode: 'environment' },
+      })
       .then((stream) => {
         video.srcObject = stream;
+        const videoTrack = stream.getVideoTracks()[0];
+        document
+          .getElementById('turnOnFlashlight')
+          .addEventListener('click', () => {
+            videoTrack
+              .applyConstraints({ advanced: [{ torch: true }] })
+              .catch((error) =>
+                console.error('Error turning on flashlight:', error),
+              );
+          });
+
+        document
+          .getElementById('turnOffFlashlight')
+          .addEventListener('click', () => {
+            videoTrack
+              .applyConstraints({ advanced: [{ torch: false }] })
+              .catch((error) =>
+                console.error('Error turning off flashlight:', error),
+              );
+          });
         video.setAttribute('playsinline', true); // required to tell iOS safari we don't want fullscreen
         video.play();
         scanCode();
