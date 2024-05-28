@@ -58,25 +58,22 @@ document.addEventListener('DOMContentLoaded', function () {
   function scanCode() {
     const codeReader = new BrowserMultiFormatReader();
     codeReader
-      .decodeFromVideoDevice(
-        null,
-        'video',
-        (result, err) => {
-          if (result) {
-            console.log(result);
-            window.alert(result.text);
-            // // Stop the video stream after successful scan
-            // const stream = video.srcObject;
-            // const tracks = stream.getTracks();
-            // tracks.forEach((track) => track.stop());
-            // video.srcObject = null;
-          }
-          if (err && !(err instanceof ZXing.NotFoundException)) {
-            console.error(err);
-          }
-        },
-        hints,
-      )
+      .decodeFromVideoDevice(null, 'video', (result, err) => {
+        if (result) {
+          console.log(result);
+          window.alert(
+            `Type: ${BarcodeFormat?.[result.format]}, Code: ${result.text}`,
+          );
+          // // Stop the video stream after successful scan
+          // const stream = video.srcObject;
+          // const tracks = stream.getTracks();
+          // tracks.forEach((track) => track.stop());
+          // video.srcObject = null;
+        }
+        if (err && !(err instanceof ZXing.NotFoundException)) {
+          console.error(err);
+        }
+      })
       .catch((err) => {
         console.error(err);
       });
