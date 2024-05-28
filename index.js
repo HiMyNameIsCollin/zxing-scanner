@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedDeviceId,
         'video',
         (result, err) => {
-          console.log(result);
           if (result) {
             window.alert(
               `Type: ${barcodeFormats?.[result.format]}, Code: ${result.text}`,
@@ -44,9 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
             // const tracks = stream.getTracks();
             // tracks.forEach((track) => track.stop());
             // video.srcObject = null;
-          }
-          if (err) {
-            console.log(err);
           }
         },
         hints,
@@ -59,42 +55,17 @@ document.addEventListener('DOMContentLoaded', function () {
   // Start the video stream when the page loads
   startVideoStream();
 });
-// video.onloadedmetadata = async () => {
-//   stream = video.srcObject;
-//   track = stream.getVideoTracks()[0];
-//   console.log(track);
-//   try {
-//     await track.applyConstraints({
-//       focusMode: 'continuous',
-//     });
-//   } catch (err) {
-//     console.error('Error applying constraints:', err);
-//   }
-//   document
-//     .getElementById('turnOnFlashlight')
-//     .addEventListener('click', async () => {
-//       try {
-//         await track.applyConstraints({
-//           torch: true,
-//         });
-//         console.log(track.getConstraints());
-//       } catch (err) {
-//         console.error('Error applying constraints:', err);
-//       }
-//     });
-//   document
-//     .getElementById('turnOffFlashlight')
-//     .addEventListener('click', async () => {
-//       try {
-//         await track.applyConstraints({
-//           torch: false,
-//         });
-//         console.log(track.getConstraints());
-//       } catch (err) {
-//         console.error('Error applying constraints:', err);
-//       }
-//     });
-// };
+video.onloadedmetadata = async () => {
+  stream = video.srcObject;
+  track = stream.getVideoTracks()[0];
+  try {
+    await track.applyConstraints({
+      focusMode: 'continuous',
+    });
+  } catch (err) {
+    console.error('Error applying constraints:', err);
+  }
+};
 
 const decodeHints = {
   0: 'OTHER',
