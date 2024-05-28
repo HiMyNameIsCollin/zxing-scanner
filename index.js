@@ -13,8 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     BarcodeFormat.CODE_93,
     BarcodeFormat.CODE_128,
   ]);
-  // hints.set(DecodeHintType.TRY_HARDER, true); // Fucks up
-  // Function to start the video stream
+  hints.set(DecodeHintType.TRY_HARDER, true);
   async function startVideoStream() {
     const codeReader = new BrowserMultiFormatReader();
 
@@ -29,21 +28,26 @@ document.addEventListener('DOMContentLoaded', function () {
   // Function to scan the code
   function scanCode(codeReader, selectedDeviceId) {
     codeReader
-      .decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
-        if (result) {
-          window.alert(
-            `Type: ${BarcodeFormat?.[result.format]}, Code: ${result.text}`,
-          );
-          // // Stop the video stream after successful scan
-          // const stream = video.srcObject;
-          // const tracks = stream.getTracks();
-          // tracks.forEach((track) => track.stop());
-          // video.srcObject = null;
-        }
-        if (err && !(err instanceof ZXing.NotFoundException)) {
-          console.error(err);
-        }
-      })
+      .decodeFromVideoDevice(
+        selectedDeviceId,
+        'video',
+        (result, err) => {
+          if (result) {
+            window.alert(
+              `Type: ${BarcodeFormat?.[result.format]}, Code: ${result.text}`,
+            );
+            // // Stop the video stream after successful scan
+            // const stream = video.srcObject;
+            // const tracks = stream.getTracks();
+            // tracks.forEach((track) => track.stop());
+            // video.srcObject = null;
+          }
+          if (err && !(err instanceof ZXing.NotFoundException)) {
+            console.error(err);
+          }
+        },
+        hints,
+      )
       .catch((err) => {
         console.error(err);
       });
